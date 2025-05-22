@@ -25,7 +25,7 @@ def run():
                 img.save(tmp.name)
                 results = model(tmp.name, imgsz=960, conf=0.1)
             status = {"Cap": False, "Label": False, "water_level": False, "Bottle": False, "bad_label": False}
-            thresholds = {"Cap": 0.01, "Label": 0.1, "water_level": 0.7, "Bottle":0.5, "bad_label": 0.2}
+            thresholds = {"Cap": 0.01, "Label": 0.1, "water_level": 0.8, "Bottle":0.6, "bad_label": 0.1}
             confidence = {}
 
             for r in results:

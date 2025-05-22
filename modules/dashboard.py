@@ -37,9 +37,12 @@ def run():
     tanggal_pilih = st.date_input("Pilih Tanggal Pengecekan", value=tanggal_default)
     filtered_df = df[df['date_checked'].dt.date == tanggal_pilih]
 
-
     total_data = len(filtered_df)
-    st.markdown(f"Total data:  {total_data}")
+    st.markdown(f"**Total data: {total_data}**")
+
+    if total_data == 0:
+        st.info("Tidak ada data pada tanggal ini.")
+        return
 
     col1, col2 = st.columns(2)
 
@@ -71,17 +74,28 @@ def run():
             "Bottle": "Kondisi Botol",
             "bad_label": "Label Merk Rusak"
         }
-        fitur = list(fitur_map.keys())
-        defect_df = filtered_df[filtered_df['final_status'] == "DEFECT"]
 
+        defect_df = filtered_df[filtered_df['final_status'] == "DEFECT"]
         if not defect_df.empty:
-            frekuensi_defect = defect_df[fitur].astype(bool).sum().sort_values(ascending=False)
-            frekuensi_defect.index = frekuensi_defect.index.map(fitur_map)
-            st.bar_chart(frekuensi_defect)
-            st.table(frekuensi_defect.to_frame(name="Jumlah"))
+            faktor_false = ["Cap", "Label", "water_level", "Bottle"]
+            faktor_true = ["bad_label"]
+            penyebab = {}
+
+            for f in faktor_false:
+                penyebab[f] = (defect_df[f] == False).sum()
+            for f in faktor_true:
+                penyebab[f] = (defect_df[f] == True).sum()
+
+            penyebab_series = pd.Series(penyebab)
+            penyebab_series.index = penyebab_series.index.map(fitur_map)
+            penyebab_series = penyebab_series.sort_values(ascending=False)
+
+            st.bar_chart(penyebab_series)
+            st.table(penyebab_series.to_frame(name="Jumlah"))
         else:
             st.info("Tidak ada data DEFECT pada tanggal ini.")
 
+    # ====== Placeholder Sentimen ======
     st.markdown("---")
     st.subheader("Analisis Sentimen")
     st.info("Visualisasi dari analisis sentimen akan ditampilkan di sini setelah modul sentimen aktif.")
