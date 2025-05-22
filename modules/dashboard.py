@@ -19,11 +19,15 @@ def prepare_df(data):
     if not df.empty:
         df['date_checked'] = pd.to_datetime(df['date_checked'])
         required_keys = ["Cap", "Label", "water_level", "Bottle"]
-        df['final_status'] = df.apply(lambda row: "PROPER" if all(row[k] for k in required_keys) else "DEFECT", axis=1)
+        df['final_status'] = df.apply(
+            lambda row: "PROPER" if all(row.get(k, False) for k in required_keys) else "DEFECT",
+            axis=1
+        )
     return df
 
 def run():
     st.header("Dashboard")
+
     json_path = "database_json/hasil_deteksi_list.json"
     data = load_data(json_path)
     df = prepare_df(data)
@@ -31,29 +35,40 @@ def run():
     if df.empty:
         st.warning("Data kosong atau file JSON tidak ditemukan.")
         return
-    
-    # buat piechart untuk visualisasi
-    total_data = len(df)
+
+    # ------------------- FILTER TANGGAL TUNGGAL -------------------
+    st.subheader("Filter Berdasarkan Tanggal Pemeriksaan")
+    available_dates = sorted(df['date_checked'].dt.date.unique())
+    selected_date = st.date_input("Pilih tanggal:", min_value=min(available_dates), max_value=max(available_dates))
+
+    filtered_df = df[df['date_checked'].dt.date == selected_date]
+
+    total_data = len(filtered_df)
     st.subheader("Distribusi Status Botol")
-    st.subheader(f"**Total data:** {total_data}")
+    st.markdown(f"**Total data pada {selected_date}: {total_data}**")
 
-    status_counts = df['final_status'].value_counts()
-    colors = ['#1f77b4', '#d62728']  # biru untuk PROPER, merah untuk DEFECT
-    labels = status_counts.index.tolist()
-    sizes = status_counts.values.tolist()
-    fig, ax = plt.subplots()
-    fig.patch.set_alpha(0)  # bikin background transparan
-    wedges, texts, autotexts = ax.pie(
-        sizes, labels=labels, autopct='%1.1f%%', startangle=90, colors=colors,
-        textprops=dict(color="w")
-    )
-    ax.axis('equal')  # supaya lingkaran bulat
-    plt.setp(autotexts, size=12, weight="bold")
-    ax.set_title("Distribusi Status Botol")
+    # ------------------- PIE CHART -------------------
+    if not filtered_df.empty:
+        status_counts = filtered_df['final_status'].value_counts()
+        colors = ['#1f77b4', '#d62728']  # biru untuk PROPER, merah untuk DEFECT
+        labels = status_counts.index.tolist()
+        sizes = status_counts.values.tolist()
 
-    st.pyplot(fig)
-    
-    # Analisis faktor penyebab botol DEFECT
+        fig, ax = plt.subplots()
+        fig.patch.set_alpha(0)
+        wedges, texts, autotexts = ax.pie(
+            sizes, labels=labels, autopct='%1.1f%%', startangle=90,
+            colors=colors, textprops=dict(color="white")
+        )
+        ax.axis('equal')
+        plt.setp(autotexts, size=12, weight="bold")
+        ax.set_title("Distribusi Status Botol")
+
+        st.pyplot(fig)
+    else:
+        st.info("Tidak ada data pada tanggal yang dipilih.")
+
+    # ------------------- FAKTOR DEFECT -------------------
     fitur_map = {
         "Cap": "Tutup Botol",
         "Label": "Label Merk Hilang",
@@ -65,13 +80,11 @@ def run():
     fitur = list(fitur_map.keys())
 
     st.subheader("Faktor yang Mempengaruhi Botol DEFECT")
-    defect_df = df[df['final_status'] == "DEFECT"]
-    frekuensi_defect = defect_df[fitur].sum().sort_values(ascending=False)
-    frekuensi_defect.index = frekuensi_defect.index.map(fitur_map)
-    st.bar_chart(frekuensi_defect)
-    st.table(frekuensi_defect.to_frame(name="Jumlah"))
-
- 
-
-
- 
+    defect_df = filtered_df[filtered_df['final_status'] == "DEFECT"]
+    if not defect_df.empty:
+        frekuensi_defect = defect_df[fitur].astype(bool).sum().sort_values(ascending=False)
+        frekuensi_defect.index = frekuensi_defect.index.map(fitur_map)
+        st.bar_chart(frekuensi_defect)
+        st.table(frekuensi_defect.to_frame(name="Jumlah"))
+    else:
+        st.info("Tidak ada data DEFECT pada tanggal ini.")

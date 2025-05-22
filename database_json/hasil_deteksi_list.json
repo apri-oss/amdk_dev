@@ -6,7 +6,7 @@
         "water_level": true,
         "Bottle": true,
         "bad_label": false,
-        "date_checked": "2025-05-22 20:18:19"
+        "date_checked": "2025-05-21 20:18:19"
     },
     {
         "id": 2,
@@ -15,7 +15,7 @@
         "water_level": false,
         "Bottle": false,
         "bad_label": true,
-        "date_checked": "2025-05-22 20:23:23"
+        "date_checked": "2025-05-21 20:23:23"
     },
     {
         "id": 3,
@@ -97,5 +97,14 @@
         "Bottle": false,
         "bad_label": false,
         "date_checked": "2025-05-22 20:53:55"
+    },
+    {
+        "id": 12,
+        "Cap": false,
+        "Label": false,
+        "water_level": false,
+        "Bottle": false,
+        "bad_label": true,
+        "date_checked": "2025-05-22 21:12:03"
     }
 ]
