@@ -1,0 +1,101 @@
+[
+    {
+        "id": 1,
+        "Cap": true,
+        "Label": true,
+        "water_level": true,
+        "Bottle": true,
+        "bad_label": false,
+        "date_checked": "2025-05-22 20:18:19"
+    },
+    {
+        "id": 2,
+        "Cap": true,
+        "Label": false,
+        "water_level": false,
+        "Bottle": false,
+        "bad_label": true,
+        "date_checked": "2025-05-22 20:23:23"
+    },
+    {
+        "id": 3,
+        "Cap": true,
+        "Label": true,
+        "water_level": true,
+        "Bottle": false,
+        "bad_label": false,
+        "date_checked": "2025-05-22 20:23:28"
+    },
+    {
+        "id": 4,
+        "Cap": true,
+        "Label": true,
+        "water_level": true,
+        "Bottle": true,
+        "bad_label": false,
+        "date_checked": "2025-05-22 20:23:36"
+    },
+    {
+        "id": 5,
+        "Cap": true,
+        "Label": true,
+        "water_level": true,
+        "Bottle": true,
+        "bad_label": false,
+        "date_checked": "2025-05-22 20:23:41"
+    },
+    {
+        "id": 6,
+        "Cap": false,
+        "Label": false,
+        "water_level": false,
+        "Bottle": false,
+        "bad_label": true,
+        "date_checked": "2025-05-22 20:52:40"
+    },
+    {
+        "id": 7,
+        "Cap": false,
+        "Label": false,
+        "water_level": false,
+        "Bottle": false,
+        "bad_label": true,
+        "date_checked": "2025-05-22 20:53:17"
+    },
+    {
+        "id": 8,
+        "Cap": true,
+        "Label": true,
+        "water_level": true,
+        "Bottle": false,
+        "bad_label": false,
+        "date_checked": "2025-05-22 20:53:31"
+    },
+    {
+        "id": 9,
+        "Cap": true,
+        "Label": false,
+        "water_level": false,
+        "Bottle": false,
+        "bad_label": true,
+        "date_checked": "2025-05-22 20:53:44"
+    },
+    {
+        "id": 10,
+        "Cap": true,
+        "Label": false,
+        "water_level": false,
+        "Bottle": false,
+        "bad_label": true,
+        "date_checked": "2025-05-22 20:53:49"
+    },
+    {
+        "id": 11,
+        "Cap": true,
+        "Label": false,
+        "water_level": false,
+        "Bottle": false,
+        "bad_label": false,
+        "date_checked": "2025-05-22 20:53:55"
+    }
+]
