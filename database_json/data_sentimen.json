@@ -1,0 +1,149 @@
+[
+    {
+        "id": 1,
+        "entitas": "label",
+        "kota": "null",
+        "is_sentimen": false,
+        "text": "jelek kemasannya"
+    },
+    {
+        "id": 2,
+        "entitas": "lain-lain",
+        "kota": "null",
+        "is_sentimen": false,
+        "text": " aku ga butuh ini "
+    },
+    {
+        "id": 3,
+        "entitas": "lain-lain",
+        "kota": "null",
+        "is_sentimen": false,
+        "text": "iu nggak banget"
+    },
+    {
+        "id": 4,
+        "entitas": "label",
+        "kota": "null",
+        "is_sentimen": false,
+        "text": " jelek kemasannya "
+    },
+    {
+        "id": 5,
+        "entitas": "lain-lain",
+        "kota": "null",
+        "is_sentimen": false,
+        "text": " aku ga butuh ini "
+    },
+    {
+        "id": 6,
+        "entitas": "lain-lain",
+        "kota": "null",
+        "is_sentimen": false,
+        "text": "iu nggak banget"
+    },
+    {
+        "id": 7,
+        "entitas": "label",
+        "kota": "null",
+        "is_sentimen": false,
+        "text": "jelek kemasannya"
+    },
+    {
+        "id": 8,
+        "entitas": "lain-lain",
+        "kota": "null",
+        "is_sentimen": false,
+        "text": " aku ga butuh ini "
+    },
+    {
+        "id": 9,
+        "entitas": "lain-lain",
+        "kota": "null",
+        "is_sentimen": false,
+        "text": "iu nggak banget"
+    },
+    {
+        "id": 10,
+        "entitas": "label",
+        "kota": "null",
+        "is_sentimen": false,
+        "text": " jelek kemasannya "
+    },
+    {
+        "id": 11,
+        "entitas": "lain-lain",
+        "kota": "null",
+        "is_sentimen": false,
+        "text": " aku ga butuh ini "
+    },
+    {
+        "id": 12,
+        "entitas": "lain-lain",
+        "kota": "null",
+        "is_sentimen": false,
+        "text": "iu nggak banget "
+    },
+    {
+        "id": 13,
+        "entitas": "label",
+        "kota": "null",
+        "is_sentimen": false,
+        "text": "jelek kemasannya"
+    },
+    {
+        "id": 14,
+        "entitas": "lain-lain",
+        "kota": "null",
+        "is_sentimen": false,
+        "text": "aku ga butuh ini"
+    },
+    {
+        "id": 15,
+        "entitas": "lain-lain",
+        "kota": "null",
+        "is_sentimen": false,
+        "text": "iu nggak banget"
+    },
+    {
+        "id": 16,
+        "entitas": "kemasan",
+        "kota": "null",
+        "is_sentimen": false,
+        "text": "jelek kemasannya"
+    },
+    {
+        "id": 17,
+        "entitas": "lain-lain",
+        "kota": "null",
+        "is_sentimen": false,
+        "text": " aku ga butuh ini "
+    },
+    {
+        "id": 18,
+        "entitas": "lain-lain",
+        "kota": "null",
+        "is_sentimen": false,
+        "text": "iu nggak banget"
+    },
+    {
+        "id": 19,
+        "entitas": "label",
+        "kota": "null",
+        "is_sentimen": false,
+        "text": " jelek kemasannya "
+    },
+    {
+        "id": 20,
+        "entitas": "lain-lain",
+        "kota": "null",
+        "is_sentimen": false,
+        "text": " aku ga butuh ini "
+    },
+    {
+        "id": 21,
+        "entitas": "lain-lain",
+        "kota": "null",
+        "is_sentimen": false,
+        "text": "iu nggak banget"
+    }
+]
