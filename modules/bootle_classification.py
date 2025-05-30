@@ -1,4 +1,5 @@
 import streamlit as st
+import torch
 from PIL import Image
 import tempfile
 import json
