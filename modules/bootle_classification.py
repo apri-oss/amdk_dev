@@ -6,15 +6,18 @@ import json
 import datetime
 import os
 # Import ultralytics modules
-import ultralytics.nn.tasks
-import ultralytics.nn.modules.conv
+import ultralytics.nn.modules.conv as conv_mod
+import ultralytics.nn.modules.head as head_mod
+import ultralytics.nn.modules.block as block_mod
+import ultralytics.nn.tasks as tasks_mod
 import torch.nn.modules.container
 
-# Allowlist class yang dibutuhkan untuk torch.load
 torch.serialization.add_safe_globals([
-    ultralytics.nn.tasks.DetectionModel,
-    torch.nn.modules.container.Sequential,
-    ultralytics.nn.modules.conv.Conv
+    tasks_mod.DetectionModel,
+    conv_mod.Conv,
+    head_mod.Detect,
+    block_mod.C2f,
+    torch.nn.modules.container.Sequential
 ])
 
 from ultralytics import YOLO
