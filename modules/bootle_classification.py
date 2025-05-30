@@ -4,6 +4,9 @@ import tempfile
 import json
 import datetime
 import os
+import ultralytics.nn.tasks
+
+torch.serialization.add_safe_globals([ultralytics.nn.tasks.DetectionModel])
 from ultralytics import YOLO
 
 
