@@ -6,8 +6,13 @@ import json
 import datetime
 import os
 import ultralytics.nn.tasks
+import torch.nn.modules.container
 
-torch.serialization.add_safe_globals([ultralytics.nn.tasks.DetectionModel])
+# Allowlist class yang dibutuhkan
+torch.serialization.add_safe_globals([
+    ultralytics.nn.tasks.DetectionModel,
+    torch.nn.modules.container.Sequential
+])
 from ultralytics import YOLO
 
 
