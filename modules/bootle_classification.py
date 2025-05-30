@@ -5,17 +5,19 @@ import tempfile
 import json
 import datetime
 import os
+# Import ultralytics modules
 import ultralytics.nn.tasks
+import ultralytics.nn.modules.conv
 import torch.nn.modules.container
 
-# Allowlist class yang dibutuhkan
+# Allowlist class yang dibutuhkan untuk torch.load
 torch.serialization.add_safe_globals([
     ultralytics.nn.tasks.DetectionModel,
-    torch.nn.modules.container.Sequential
+    torch.nn.modules.container.Sequential,
+    ultralytics.nn.modules.conv.Conv
 ])
+
 from ultralytics import YOLO
-
-
 model = YOLO("./ml_models/defect_classification/best.pt")
 
 def run():
