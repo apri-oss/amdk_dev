@@ -6,7 +6,6 @@ import datetime
 import os
 from ultralytics import YOLO
 
-
 model = YOLO("./ml_models/defect_classification/best.pt")
 
 def run():
@@ -24,8 +23,9 @@ def run():
             with tempfile.NamedTemporaryFile(delete=False, suffix=".jpg") as tmp:
                 img.save(tmp.name)
                 results = model(tmp.name, imgsz=960, conf=0.1)
+
             status = {"Cap": False, "Label": False, "water_level": False, "Bottle": False, "bad_label": False}
-            thresholds = {"Cap": 0.01, "Label": 0.1, "water_level": 0.8, "Bottle":0.6, "bad_label": 0.1}
+            thresholds = {"Cap": 0.01, "Label": 0.1, "water_level": 0.8, "Bottle": 0.7, "bad_label": 0.1}
             confidence = {}
 
             for r in results:
@@ -44,12 +44,14 @@ def run():
             st.markdown(f"### HASIL: **{final}**")
             st.write("Detail Komponen:", status)
 
-            json_file = save_data(status)
+            st.write("Confidence Score:")
+            for label, conf in confidence.items():
+                st.write(f"- {label}: {conf:.2f}")
+
+            json_file = save_data(status, confidence)
             st.success("Hasil deteksi disimpan.")
 
-
-def save_data(status_dict):
-
+def save_data(status_dict, confidence_dict):
     # location to store data json
     folder_path = "database_json"
     if not os.path.exists(folder_path):
@@ -63,12 +65,12 @@ def save_data(status_dict):
                 existing_data = []
     else:
         existing_data = []
-    
+
     if existing_data:
         id_data = max(item.get("id", 0) for item in existing_data) + 1
     else:
         id_data = 1
-        
+
     time_checked = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     data = {
         "id": id_data,
@@ -77,6 +79,7 @@ def save_data(status_dict):
         "water_level": status_dict.get("water_level", False),
         "Bottle": status_dict.get("Bottle", False),
         "bad_label": status_dict.get("bad_label", False),
+        "confidence": {label: round(conf, 4) for label, conf in confidence_dict.items()},
         "date_checked": time_checked
     }
 
