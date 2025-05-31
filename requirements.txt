@@ -7,6 +7,6 @@ Pillow==10.3.0
 google-generativeai==0.8.5
 opencv-python-headless==4.8.0.76
 ultralytics==8.3.146
-torch==2.6.0+cu124
-torchvision==0.21.0+cu124
+torch==2.6.0
+torchvision==0.21.0
 
