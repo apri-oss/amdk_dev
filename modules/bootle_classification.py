@@ -6,23 +6,23 @@ import json
 import datetime
 import os
 
-# Safe load patch untuk PyTorch 2.6+ jika pakai Ultralytics
-try:
-    import ultralytics.nn.modules.conv as conv_mod
-    import ultralytics.nn.modules.head as head_mod
-    import ultralytics.nn.modules.block as block_mod
-    import ultralytics.nn.tasks as tasks_mod
-    import torch.nn.modules.container
+# # Safe load patch untuk PyTorch 2.6+ jika pakai Ultralytics
+# try:
+#     import ultralytics.nn.modules.conv as conv_mod
+#     import ultralytics.nn.modules.head as head_mod
+#     import ultralytics.nn.modules.block as block_mod
+#     import ultralytics.nn.tasks as tasks_mod
+#     import torch.nn.modules.container
 
-    torch.serialization.add_safe_globals([
-        tasks_mod.DetectionModel,
-        conv_mod.Conv,
-        head_mod.Detect,
-        block_mod.C2f,
-        torch.nn.modules.container.Sequential
-    ])
-except Exception as e:
-    st.warning(f"Gagal patch torch globals (boleh diabaikan jika bukan PyTorch 2.6+): {e}")
+#     torch.serialization.add_safe_globals([
+#         tasks_mod.DetectionModel,
+#         conv_mod.Conv,
+#         head_mod.Detect,
+#         block_mod.C2f,
+#         torch.nn.modules.container.Sequential
+#     ])
+# except Exception as e:
+#     st.warning(f"Gagal patch torch globals (boleh diabaikan jika bukan PyTorch 2.6+): {e}")
 
 # Load model
 model_path = "./ml_models/defect_classification/best.pt"
