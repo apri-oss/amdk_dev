@@ -7,15 +7,18 @@ from sklearn.preprocessing import StandardScaler, LabelEncoder
 import json
 from datetime import datetime, timedelta
 
-# Fungsi load scaler dari file JSON, sekarang lengkap dengan mean_
+# Fungsi load scaler dari file JSON dengan pengecekan key secara aman
 def load_scaler_json(filename):
     with open(filename, 'r') as f:
         params = json.load(f)
     scaler = StandardScaler()
-    scaler.mean_ = np.array(params.get('mean', []))  # pakai get untuk menghindari error
-    scaler.scale_ = np.array(params['scale'])
-    scaler.var_ = np.array(params['var'])
-    if params['n_samples_seen'] is not None:
+    if 'mean' in params:
+        scaler.mean_ = np.array(params['mean'])
+    if 'scale' in params:
+        scaler.scale_ = np.array(params['scale'])
+    if 'var' in params:
+        scaler.var_ = np.array(params['var'])
+    if params.get('n_samples_seen') is not None:
         scaler.n_samples_seen_ = params['n_samples_seen']
     return scaler
 
@@ -34,26 +37,36 @@ def load_artifacts():
         "ml_models/forecasting/model_global_region.h5",
         custom_objects={"mse": tf.keras.losses.MeanSquaredError()}
     )
+
+    # Load scaler temporal
     scaler_temporal = load_scaler_json("ml_models/forecasting/scaler_temporal.json")
+
+    # Load scaler per region
     scaler_per_region = {}
     with open("ml_models/forecasting/scaler_per_region.json", 'r') as f:
         scaler_per_region_dict = json.load(f)
-    # Convert each scaler per region dict ke StandardScaler object
+
     for region, scaler_params in scaler_per_region_dict.items():
         scaler = StandardScaler()
-        scaler.mean_ = np.array(scaler_params.get('mean', []))
-        scaler.scale_ = np.array(scaler_params['scale'])
-        scaler.var_ = np.array(scaler_params['var'])
-        if scaler_params['n_samples_seen'] is not None:
+        if 'mean' in scaler_params:
+            scaler.mean_ = np.array(scaler_params['mean'])
+        if 'scale' in scaler_params:
+            scaler.scale_ = np.array(scaler_params['scale'])
+        if 'var' in scaler_params:
+            scaler.var_ = np.array(scaler_params['var'])
+        if scaler_params.get('n_samples_seen') is not None:
             scaler.n_samples_seen_ = scaler_params['n_samples_seen']
         scaler_per_region[region] = scaler
 
+    # Load label encoder
     label_encoder = load_label_encoder_json("ml_models/forecasting/label_encoder_classes.json")
 
     return model, scaler_temporal, scaler_per_region, label_encoder
 
+# Load semua artefak sekali saat pertama dijalankan
 model, scaler_temporal, scaler_per_region, label_encoder = load_artifacts()
 
+# Fungsi utama aplikasi
 def run():
     st.header("Module 3: Prediksi Time Series")
     st.write("Halaman untuk prediksi permintaan air minum berdasarkan model LSTM kategori Water.")
@@ -68,7 +81,7 @@ def run():
         today = datetime.now().date()
         look_back = 30
 
-        # DataFrame tanggal historis (fitur temporal)
+        # Buat fitur temporal 30 hari ke belakang
         dates_hist = [today - timedelta(days=i) for i in range(look_back)][::-1]
         df_feat = pd.DataFrame({'Order_Date': dates_hist})
         df_feat['Order_Date'] = pd.to_datetime(df_feat['Order_Date'])
@@ -83,15 +96,16 @@ def run():
         num_regions = len(regions)
         seq = np.zeros((1, look_back, num_regions))
 
-        # Isi data dummy untuk region yang dipilih, misal pakai 1.0, kamu bisa ganti sesuai data asli
+        # Data dummy untuk region terpilih (misalnya 1.0)
         seq[:, :, region_code] = 1.0
 
-        # Prediksi scaled output
+        # Prediksi (scaled)
         preds_scaled = model.predict([seq, np.array([region_code])])[0]
 
-        # Inverse scaling hasil prediksi untuk region terpilih
+        # Inverse transform hasil prediksi
         preds = scaler_per_region[selected_region].inverse_transform(preds_scaled.reshape(-1, 1)).flatten()
 
+        # Tanggal hasil prediksi
         dates_pred = [today + timedelta(days=i + 1) for i in range(steps_ahead)]
         df_result = pd.DataFrame({
             'Date': dates_pred,
@@ -101,6 +115,3 @@ def run():
         st.subheader("Hasil Prediksi Quantity per Tanggal")
         st.line_chart(df_result.set_index('Date'))
         st.dataframe(df_result)
-
-if __name__ == "__main__":
-    run()
