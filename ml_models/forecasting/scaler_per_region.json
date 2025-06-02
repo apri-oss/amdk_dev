@@ -1,1 +1,290 @@
-{"Baden-W\u00fcrttemberg": {"data_min": [1.0], "data_max": [100.0], "data_range": [99.0], "scale": [0.010101010101010102], "min": [-0.010101010101010102], "n_samples_seen": 138216}, "Hamburg": {"data_min": [1.0], "data_max": [100.0], "data_range": [99.0], "scale": [0.010101010101010102], "min": [-0.010101010101010102], "n_samples_seen": 151302}, "Saarland": {"data_min": [1.0], "data_max": [100.0], "data_range": [99.0], "scale": [0.010101010101010102], "min": [-0.010101010101010102], "n_samples_seen": 143292}, "Bayern": {"data_min": [1.0], "data_max": [100.0], "data_range": [99.0], "scale": [0.010101010101010102], "min": [-0.010101010101010102], "n_samples_seen": 139068}, "Nordrhein-Westfalen": {"data_min": [1.0], "data_max": [100.0], "data_range": [99.0], "scale": [0.010101010101010102], "min": [-0.010101010101010102], "n_samples_seen": 141895}, "Mecklenburg-Vorpommern": {"data_min": [1.0], "data_max": [100.0], "data_range": [99.0], "scale": [0.010101010101010102], "min": [-0.010101010101010102], "n_samples_seen": 135845}, "Rheinland-Pfalz": {"data_min": [1.0], "data_max": [100.0], "data_range": [99.0], "scale": [0.010101010101010102], "min": [-0.010101010101010102], "n_samples_seen": 144176}, "Bremen": {"data_min": [1.0], "data_max": [100.0], "data_range": [99.0], "scale": [0.010101010101010102], "min": [-0.010101010101010102], "n_samples_seen": 142196}, "Sachsen": {"data_min": [1.0], "data_max": [100.0], "data_range": [99.0], "scale": [0.010101010101010102], "min": [-0.010101010101010102], "n_samples_seen": 142945}, "Th\u00fcringen": {"data_min": [1.0], "data_max": [100.0], "data_range": [99.0], "scale": [0.010101010101010102], "min": [-0.010101010101010102], "n_samples_seen": 141246}, "Brandenburg": {"data_min": [1.0], "data_max": [100.0], "data_range": [99.0], "scale": [0.010101010101010102], "min": [-0.010101010101010102], "n_samples_seen": 133423}, "Niedersachsen": {"data_min": [1.0], "data_max": [100.0], "data_range": [99.0], "scale": [0.010101010101010102], "min": [-0.010101010101010102], "n_samples_seen": 144428}, "Sachsen-Anhalt": {"data_min": [1.0], "data_max": [100.0], "data_range": [99.0], "scale": [0.010101010101010102], "min": [-0.010101010101010102], "n_samples_seen": 137222}, "Berlin": {"data_min": [1.0], "data_max": [100.0], "data_range": [99.0], "scale": [0.010101010101010102], "min": [-0.010101010101010102], "n_samples_seen": 136784}, "Schleswig-Holstein": {"data_min": [1.0], "data_max": [100.0], "data_range": [99.0], "scale": [0.010101010101010102], "min": [-0.010101010101010102], "n_samples_seen": 141319}, "Hessen": {"data_min": [1.0], "data_max": [100.0], "data_range": [99.0], "scale": [0.010101010101010102], "min": [-0.010101010101010102], "n_samples_seen": 136860}}
+{
+  "Baden-W\u00fcrttemberg": {
+    "data_min": [
+      1.0
+    ],
+    "data_max": [
+      100.0
+    ],
+    "data_range": [
+      99.0
+    ],
+    "scale": [
+      0.010101010101010102
+    ],
+    "min": [
+      -0.010101010101010102
+    ],
+    "n_samples_seen": 138216
+  },
+  "Hamburg": {
+    "data_min": [
+      1.0
+    ],
+    "data_max": [
+      100.0
+    ],
+    "data_range": [
+      99.0
+    ],
+    "scale": [
+      0.010101010101010102
+    ],
+    "min": [
+      -0.010101010101010102
+    ],
+    "n_samples_seen": 151302
+  },
+  "Saarland": {
+    "data_min": [
+      1.0
+    ],
+    "data_max": [
+      100.0
+    ],
+    "data_range": [
+      99.0
+    ],
+    "scale": [
+      0.010101010101010102
+    ],
+    "min": [
+      -0.010101010101010102
+    ],
+    "n_samples_seen": 143292
+  },
+  "Bayern": {
+    "data_min": [
+      1.0
+    ],
+    "data_max": [
+      100.0
+    ],
+    "data_range": [
+      99.0
+    ],
+    "scale": [
+      0.010101010101010102
+    ],
+    "min": [
+      -0.010101010101010102
+    ],
+    "n_samples_seen": 139068
+  },
+  "Nordrhein-Westfalen": {
+    "data_min": [
+      1.0
+    ],
+    "data_max": [
+      100.0
+    ],
+    "data_range": [
+      99.0
+    ],
+    "scale": [
+      0.010101010101010102
+    ],
+    "min": [
+      -0.010101010101010102
+    ],
+    "n_samples_seen": 141895
+  },
+  "Mecklenburg-Vorpommern": {
+    "data_min": [
+      1.0
+    ],
+    "data_max": [
+      100.0
+    ],
+    "data_range": [
+      99.0
+    ],
+    "scale": [
+      0.010101010101010102
+    ],
+    "min": [
+      -0.010101010101010102
+    ],
+    "n_samples_seen": 135845
+  },
+  "Rheinland-Pfalz": {
+    "data_min": [
+      1.0
+    ],
+    "data_max": [
+      100.0
+    ],
+    "data_range": [
+      99.0
+    ],
+    "scale": [
+      0.010101010101010102
+    ],
+    "min": [
+      -0.010101010101010102
+    ],
+    "n_samples_seen": 144176
+  },
+  "Bremen": {
+    "data_min": [
+      1.0
+    ],
+    "data_max": [
+      100.0
+    ],
+    "data_range": [
+      99.0
+    ],
+    "scale": [
+      0.010101010101010102
+    ],
+    "min": [
+      -0.010101010101010102
+    ],
+    "n_samples_seen": 142196
+  },
+  "Sachsen": {
+    "data_min": [
+      1.0
+    ],
+    "data_max": [
+      100.0
+    ],
+    "data_range": [
+      99.0
+    ],
+    "scale": [
+      0.010101010101010102
+    ],
+    "min": [
+      -0.010101010101010102
+    ],
+    "n_samples_seen": 142945
+  },
+  "Th\u00fcringen": {
+    "data_min": [
+      1.0
+    ],
+    "data_max": [
+      100.0
+    ],
+    "data_range": [
+      99.0
+    ],
+    "scale": [
+      0.010101010101010102
+    ],
+    "min": [
+      -0.010101010101010102
+    ],
+    "n_samples_seen": 141246
+  },
+  "Brandenburg": {
+    "data_min": [
+      1.0
+    ],
+    "data_max": [
+      100.0
+    ],
+    "data_range": [
+      99.0
+    ],
+    "scale": [
+      0.010101010101010102
+    ],
+    "min": [
+      -0.010101010101010102
+    ],
+    "n_samples_seen": 133423
+  },
+  "Niedersachsen": {
+    "data_min": [
+      1.0
+    ],
+    "data_max": [
+      100.0
+    ],
+    "data_range": [
+      99.0
+    ],
+    "scale": [
+      0.010101010101010102
+    ],
+    "min": [
+      -0.010101010101010102
+    ],
+    "n_samples_seen": 144428
+  },
+  "Sachsen-Anhalt": {
+    "data_min": [
+      1.0
+    ],
+    "data_max": [
+      100.0
+    ],
+    "data_range": [
+      99.0
+    ],
+    "scale": [
+      0.010101010101010102
+    ],
+    "min": [
+      -0.010101010101010102
+    ],
+    "n_samples_seen": 137222
+  },
+  "Berlin": {
+    "data_min": [
+      1.0
+    ],
+    "data_max": [
+      100.0
+    ],
+    "data_range": [
+      99.0
+    ],
+    "scale": [
+      0.010101010101010102
+    ],
+    "min": [
+      -0.010101010101010102
+    ],
+    "n_samples_seen": 136784
+  },
+  "Schleswig-Holstein": {
+    "data_min": [
+      1.0
+    ],
+    "data_max": [
+      100.0
+    ],
+    "data_range": [
+      99.0
+    ],
+    "scale": [
+      0.010101010101010102
+    ],
+    "min": [
+      -0.010101010101010102
+    ],
+    "n_samples_seen": 141319
+  },
+  "Hessen": {
+    "data_min": [
+      1.0
+    ],
+    "data_max": [
+      100.0
+    ],
+    "data_range": [
+      99.0
+    ],
+    "scale": [
+      0.010101010101010102
+    ],
+    "min": [
+      -0.010101010101010102
+    ],
+    "n_samples_seen": 136860
+  }
+}
