@@ -3,12 +3,12 @@ import pandas as pd
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras.models import load_model
-from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
 import json
 from datetime import datetime, timedelta
 
-# Fungsi load scaler dari file JSON dengan pengecekan key secara aman
-def load_scaler_json(filename):
+# Fungsi load StandardScaler
+def load_standard_scaler_json(filename):
     with open(filename, 'r') as f:
         params = json.load(f)
     scaler = StandardScaler()
@@ -22,7 +22,24 @@ def load_scaler_json(filename):
         scaler.n_samples_seen_ = params['n_samples_seen']
     return scaler
 
-# Fungsi load label encoder dari file JSON
+# Fungsi load MinMaxScaler
+def load_minmax_scaler_from_dict(params):
+    scaler = MinMaxScaler()
+    if 'data_min' in params:
+        scaler.data_min_ = np.array(params['data_min'])
+    if 'data_max' in params:
+        scaler.data_max_ = np.array(params['data_max'])
+    if 'data_range' in params:
+        scaler.data_range_ = np.array(params['data_range'])
+    if 'scale' in params:
+        scaler.scale_ = np.array(params['scale'])
+    if 'min' in params:
+        scaler.min_ = np.array(params['min'])
+    if params.get('n_samples_seen') is not None:
+        scaler.n_samples_seen_ = params['n_samples_seen']
+    return scaler
+
+# Fungsi load label encoder
 def load_label_encoder_json(filename):
     with open(filename, 'r') as f:
         classes = json.load(f)
@@ -30,7 +47,7 @@ def load_label_encoder_json(filename):
     le.classes_ = np.array(classes)
     return le
 
-# Cache untuk load model dan scaler hanya sekali
+# Caching model dan artefak lainnya
 @st.cache_resource
 def load_artifacts():
     model = load_model(
@@ -39,31 +56,22 @@ def load_artifacts():
     )
 
     # Load scaler temporal
-    scaler_temporal = load_scaler_json("ml_models/forecasting/scaler_temporal.json")
+    scaler_temporal = load_standard_scaler_json("ml_models/forecasting/scaler_temporal.json")
 
-    # Load scaler per region
+    # Load scaler per region (MinMaxScaler)
     scaler_per_region = {}
     with open("ml_models/forecasting/scaler_per_region.json", 'r') as f:
         scaler_per_region_dict = json.load(f)
 
-    for region, scaler_params in scaler_per_region_dict.items():
-        scaler = StandardScaler()
-        if 'mean' in scaler_params:
-            scaler.mean_ = np.array(scaler_params['mean'])
-        if 'scale' in scaler_params:
-            scaler.scale_ = np.array(scaler_params['scale'])
-        if 'var' in scaler_params:
-            scaler.var_ = np.array(scaler_params['var'])
-        if scaler_params.get('n_samples_seen') is not None:
-            scaler.n_samples_seen_ = scaler_params['n_samples_seen']
-        scaler_per_region[region] = scaler
+    for region, params in scaler_per_region_dict.items():
+        scaler_per_region[region] = load_minmax_scaler_from_dict(params)
 
     # Load label encoder
     label_encoder = load_label_encoder_json("ml_models/forecasting/label_encoder.json")
 
     return model, scaler_temporal, scaler_per_region, label_encoder
 
-# Load semua artefak sekali saat pertama dijalankan
+# Load artefak
 model, scaler_temporal, scaler_per_region, label_encoder = load_artifacts()
 
 # Fungsi utama aplikasi
@@ -81,7 +89,7 @@ def run():
         today = datetime.now().date()
         look_back = 30
 
-        # Buat fitur temporal 30 hari ke belakang
+        # Buat fitur temporal
         dates_hist = [today - timedelta(days=i) for i in range(look_back)][::-1]
         df_feat = pd.DataFrame({'Order_Date': dates_hist})
         df_feat['Order_Date'] = pd.to_datetime(df_feat['Order_Date'])
@@ -90,28 +98,35 @@ def run():
         df_feat['year'] = df_feat['Order_Date'].dt.year
 
         # Scaling fitur temporal
-        tmp = scaler_temporal.transform(df_feat[['day_of_year', 'month', 'year']])
-        df_feat[['day_of_year', 'month', 'year']] = tmp
+        df_feat[['day_of_year', 'month', 'year']] = scaler_temporal.transform(
+            df_feat[['day_of_year', 'month', 'year']]
+        )
 
+        # One-hot untuk region (dummy sequence)
         num_regions = len(regions)
         seq = np.zeros((1, look_back, num_regions))
+        seq[:, :, region_code] = 1.0  # Active region
 
-        # Data dummy untuk region terpilih (misalnya 1.0)
-        seq[:, :, region_code] = 1.0
+        # Model inference
+        preds_scaled = model.predict([seq, np.array([region_code])])[0]  # shape: (n_steps,)
 
-        # Prediksi (scaled)
-        preds_scaled = model.predict([seq, np.array([region_code])])[0]
+        # Inverse transform
+        try:
+            scaler = scaler_per_region[selected_region]
+            preds = scaler.inverse_transform(preds_scaled.reshape(-1, 1)).flatten()
+        except Exception as e:
+            st.error(f"Error saat inverse transform: {e}")
+            return
 
-        # Inverse transform hasil prediksi
-        preds = scaler_per_region[selected_region].inverse_transform(preds_scaled.reshape(-1, 1)).flatten()
-
-        # Tanggal hasil prediksi
+        # Hasil prediksi
         dates_pred = [today + timedelta(days=i + 1) for i in range(steps_ahead)]
         df_result = pd.DataFrame({
             'Date': dates_pred,
             'Predicted_Quantity': preds[:steps_ahead]
         })
 
+        # Tampilkan hasil
         st.subheader("Hasil Prediksi Quantity per Tanggal")
         st.line_chart(df_result.set_index('Date'))
         st.dataframe(df_result)
+
