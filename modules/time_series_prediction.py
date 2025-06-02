@@ -59,7 +59,7 @@ def load_artifacts():
         scaler_per_region[region] = scaler
 
     # Load label encoder
-    label_encoder = load_label_encoder_json("ml_models/forecasting/label_encoder_classes.json")
+    label_encoder = load_label_encoder_json("ml_models/forecasting/label_encoder.json")
 
     return model, scaler_temporal, scaler_per_region, label_encoder
 
