@@ -106,5 +106,45 @@
         "Bottle": false,
         "bad_label": true,
         "date_checked": "2025-05-22 21:12:03"
+    },
+    {
+        "id": 13,
+        "Cap": true,
+        "Label": false,
+        "water_level": false,
+        "Bottle": true,
+        "bad_label": false,
+        "confidence": {
+            "Bottle": 0.1334,
+            "Cap": 0.1569
+        },
+        "date_checked": "2025-06-02 15:01:27"
+    },
+    {
+        "id": 14,
+        "Cap": true,
+        "Label": false,
+        "water_level": false,
+        "Bottle": true,
+        "bad_label": false,
+        "confidence": {
+            "Bottle": 0.1334,
+            "Cap": 0.1569
+        },
+        "date_checked": "2025-06-02 15:05:13"
+    },
+    {
+        "id": 15,
+        "Cap": true,
+        "Label": true,
+        "water_level": false,
+        "Bottle": true,
+        "bad_label": false,
+        "confidence": {
+            "Bottle": 0.9301,
+            "Cap": 0.2313,
+            "Label": 0.1966
+        },
+        "date_checked": "2025-06-02 15:08:26"
     }
 ]
