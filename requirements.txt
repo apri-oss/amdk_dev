@@ -5,9 +5,8 @@ matplotlib==3.8.4
 inference==0.9.1
 Pillow==10.3.0
 google-generativeai==0.8.5
-opencv-python-headless==4.8.0.76
-ultralytics==8.3.146
-torch==2.6.0
-torchvision==0.21.0
-numpy<2
-
+opencv-python-headless==4.7.0.72
+ultralytics==8.0.20
+torch==2.1.2
+torchvision==0.16.2
+numpy==1.24.4
