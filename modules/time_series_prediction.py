@@ -12,7 +12,6 @@ def load_scaler_json(filename):
     with open(filename, 'r') as f:
         params = json.load(f)
     scaler = StandardScaler()
-    scaler.mean_ = np.array(params['mean'])
     scaler.scale_ = np.array(params['scale'])
     scaler.var_ = np.array(params['var'])
     if params['n_samples_seen'] is not None:
@@ -41,7 +40,6 @@ def load_artifacts():
     # Convert each scaler per region dict ke StandardScaler object
     for region, scaler_params in scaler_per_region_dict.items():
         scaler = StandardScaler()
-        scaler.mean_ = np.array(scaler_params['mean'])
         scaler.scale_ = np.array(scaler_params['scale'])
         scaler.var_ = np.array(scaler_params['var'])
         if scaler_params['n_samples_seen'] is not None:
