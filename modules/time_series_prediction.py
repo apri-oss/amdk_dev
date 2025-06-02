@@ -7,11 +7,12 @@ from sklearn.preprocessing import StandardScaler, LabelEncoder
 import json
 from datetime import datetime, timedelta
 
-# Fungsi load scaler dari file JSON
+# Fungsi load scaler dari file JSON, sekarang lengkap dengan mean_
 def load_scaler_json(filename):
     with open(filename, 'r') as f:
         params = json.load(f)
     scaler = StandardScaler()
+    scaler.mean_ = np.array(params.get('mean', []))  # pakai get untuk menghindari error
     scaler.scale_ = np.array(params['scale'])
     scaler.var_ = np.array(params['var'])
     if params['n_samples_seen'] is not None:
@@ -40,6 +41,7 @@ def load_artifacts():
     # Convert each scaler per region dict ke StandardScaler object
     for region, scaler_params in scaler_per_region_dict.items():
         scaler = StandardScaler()
+        scaler.mean_ = np.array(scaler_params.get('mean', []))
         scaler.scale_ = np.array(scaler_params['scale'])
         scaler.var_ = np.array(scaler_params['var'])
         if scaler_params['n_samples_seen'] is not None:
@@ -80,7 +82,9 @@ def run():
 
         num_regions = len(regions)
         seq = np.zeros((1, look_back, num_regions))
-        seq[:, :, region_code] = 0.0  # kuantitas dummy sesuai kode region
+
+        # Isi data dummy untuk region yang dipilih, misal pakai 1.0, kamu bisa ganti sesuai data asli
+        seq[:, :, region_code] = 1.0
 
         # Prediksi scaled output
         preds_scaled = model.predict([seq, np.array([region_code])])[0]
