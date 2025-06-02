@@ -1,5 +1,8 @@
 import streamlit as st
+import os
 from streamlit_option_menu import option_menu
+
+os.environ["STREAMLIT_WATCHER_TYPE"] = "none"
 
 # Import module
 from modules import bootle_classification, extraction_sentiment, time_series_prediction,dashboard
